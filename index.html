@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=, initial-scale=1.0">
+        <title>dev.finace</title>
+
+        <!-- FONT -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+        <!-- BOX-ICONS -->
+        <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+
+        <!-- STYLES -->
+        <link rel="stylesheet" href="Assets/styles/style.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="wrapper">
+                <header>
+                    <span>
+                        dev<strong>.</strong>finance
+                    </span>
+                    <span>
+                        <strong>$</strong>
+                    </span>
+                </header>
+
+                <div class="info">
+                    <div class="cards card1">
+                        <p>
+                            Entradas
+
+                            <i class='bx bx-up-arrow-circle'></i>
+                        </p>
+
+                        <div class="res" >
+                            R$ <span id="prohibitedsHTML"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="cards card2">
+                        <p>
+                            Saídas
+
+                            <i class='bx bx-down-arrow-circle' ></i>
+                        </p>
+
+                        <div class="res">
+                            R$ <span id="exitsHTML"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="cards card3">
+                        <p>
+                            Total
+
+                            <i class='bx bx-dollar' ></i>
+                        </p>
+
+                        <div class="res">
+                            R$ <span id="totalHTML"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="add-transation">
+                    <div class="add" onclick="toggleModal()">
+                        <i class='bx bx-plus' ></i>
+                        <span>
+                            Nova Transação
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="table">
+                    <div class="tr first-tr">
+                       <div class="th">
+                           <span>
+
+                           </span>
+                           <span>
+                                Data
+                           </span>
+                       
+                           <span class="value">
+                               Valor
+                           </span>
+                       
+                           <span>
+                                Descrição
+                           </span>
+                       </div>
+                    </div>
+                    <div class="little-table"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-wrapper">
+            <div class="modal">
+                <h2>
+                    Nova Transação
+                </h2>
+                <form action="#">
+                    <label for="description" class="sr-only">Descrição da Transação</label>
+                    <input type="text" name="description" id="description" placeholder="Descrição" oninput="msgError(this, 1)">
+                    
+                    <p id="descriptionError">
+                        Adicione uma descrição para a transação
+                    </p>
+
+                    <label for="valor" class="sr-only">Valor da Transação</label>
+                    <input type="text" name="valor" id="valor" placeholder="0,00" oninput="msgError(this, 3)"onkeyup="formatarMoeda()">
+                    
+                    <p id="valueError">
+                        Use o sinal - (negativo) para despesas e , (vírgula) para casas decimais
+                    </p>
+                    
+                    <label for="date" class="sr-only">data da Transação</label>
+                    <input type="date" name="date" id="date" placeholder="dd/mm/yyyy" oninput="msgError(this, 2)">
+                    
+                    <p id="dateError">
+                        Adicione uma data para a transação
+                    </p>
+
+                    <div class="buttons">
+                        <div class="button outlined" onclick="toggleModal()">
+                            Cancelar
+                        </div>
+                        <div class="button" onclick="save()">
+                            Salvar
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+
+    <script src="Assets/script/script.js"></script>
+</html>

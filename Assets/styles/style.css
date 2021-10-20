@@ -1,0 +1,263 @@
+/* RESET */
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    outline: none;
+    border: 0;
+    box-sizing: border-box;
+}
+
+/* VARIBLES */
+html{
+    --back-color: #F0F2F5;
+    --green-dark: #2D4A22;
+    --green: #49AA26;
+    --red: #E92929;
+    --blue-title: #363F5F;
+    --gray-text: #969CB2;
+    --white: #FFF;
+
+    font-family: 'Poppins', sans-serif;
+
+    /* 1rem = 16px (User Agent) = 100% (User Agent) */
+    font-size: 62.5% /* 10px */
+}
+
+/* GLOBAL */
+strong{
+    color: var(--green);
+}
+.sr-only{
+    position: absolute;
+    height: 1px;
+    width: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* BODY */
+body{
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--back-color);
+    overflow-x: hidden;
+}
+
+/* CONTAINER */
+.container{
+    width: 100%;
+    height: 15rem;
+    background-color: var(--green-dark);
+}
+
+/* WRAPPER */
+.wrapper{
+    width: 100%;
+    max-width: 115.6rem;
+    position: absolute;
+    top: 2rem;
+    left: 50%;
+    transform: translate(-50%, 0);
+    padding: 0 1rem;
+
+}
+/* HEADER */
+.wrapper header{
+    width: 20rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.6rem;
+    color: var(--white);
+    margin: 0 auto;
+}
+
+/* INFO CARDS */
+.wrapper .info{
+    max-width: 100rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 32rem));
+    gap: 2rem;
+    margin: 2.5rem auto;
+    justify-content: center;
+}
+.wrapper .info .cards{
+    background-color: var(--white);
+    font-size: 2.4rem;
+    padding: 2rem;
+}
+.wrapper .info .card3{
+    background-color: var(--green);
+    color: var(--white);
+}
+.wrapper .info .cards p{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.4rem;
+}
+.wrapper .info .card1 p i{
+    color: var(--green);
+}
+.wrapper .info .card2 p i, 
+.wrapper .table .tr .td i:first-child{
+    color: var(--red);
+}
+.wrapper .info .cards p i,
+.wrapper .table .tr .td i:first-child{
+    font-size: 2.5rem;
+}
+.wrapper .info .cards .res{
+    min-width: 130px;
+}
+
+/* add-transation */
+.wrapper .add-transation{
+    max-width: 100rem ;
+    margin: 0 auto;
+}
+.wrapper .add-transation .add{
+    width: 16rem;
+    padding: 0.8rem;
+    font-size: 1.5rem;
+    color: var(--green);
+    margin-left: auto;
+    transition: all .2s;
+}
+.wrapper .add-transation .add:hover{
+    background-color: var(--green);
+    color: var(--white);
+    cursor: pointer;
+}
+
+/* TABLE */
+.wrapper .table {
+    max-width: 100rem;
+    margin: 0 auto;
+    margin-bottom: 4rem;
+}
+.wrapper .table .tr{
+    background-color: var(--white);
+    width: 100%;
+    padding: 2rem 3.2rem;
+    font-size: 1.6rem;
+    margin: 1rem 0;
+}
+.wrapper .table .first-tr, .date{
+    background-color: transparent;
+    color: var(--gray-text);
+}
+.wrapper .table .tr .th{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+}
+.wrapper .table .tr .td{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+.wrapper .little-table .tr .td .transation,
+.wrapper .little-table .tr .td .date,
+.wrapper .little-table .tr .td .value{
+    width: 240px;
+    margin-right: 7rem;
+}
+.wrapper .table .tr .td .exit{
+    color: var(--red);
+}
+.wrapper .table  .tr .td .prohibited{
+    color: var(--green);
+}
+.wrapper .table .tr .td i:first-child{
+    cursor: pointer;
+}
+
+/* MODAL */
+.modal-wrapper{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.616);
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    display: grid;
+    align-items: center;
+    display: none;
+}
+.modal-wrapper .modal{
+    width: 30rem;
+    max-height: 33rem;
+    background-color: var(--back-color);
+    padding: 2rem 1.6rem;
+    margin: 0 auto;
+}
+.modal-wrapper .modal input{
+    width: 100%;
+    display: block;
+    margin: 1rem 0;
+    padding: 1rem;
+}
+/* MSG ERROR */
+.modal-wrapper .modal #descriptionError,
+.modal-wrapper .modal #dateError{
+    color: var(--red);
+    display: none;
+}
+.modal-wrapper .modal #date-error{
+    margin-bottom: 1rem;
+}
+.modal-wrapper .modal .buttons{
+    display: flex;
+    justify-content: space-between;
+}
+.modal-wrapper .modal .button{
+    width: 49%;
+    padding: 1rem;
+    text-align: center;
+    color: var(--white);
+    background-color: var(--green);
+    opacity: 0.8;
+    transition: all .2s;
+}
+.modal-wrapper .modal .button:hover{
+    opacity: 1;
+    cursor: pointer;
+}
+.modal-wrapper .modal .button.outlined{
+    background-color: transparent;
+    color: var(--red);
+    border: 1px solid var(--red);
+    margin-right: 1rem;
+}
+.modal-wrapper .modal .button.outlined:hover{
+    background-color: var(--red);
+    color: white;
+}
+@media screen and (min-width: 460px){
+    .modal-wrapper .modal{
+        width: 50rem;
+    }
+}
+@media screen and (min-width: 660px){
+    .wrapper .info .card3{
+        grid-column: 2;
+        position: relative;
+        left: -14rem;
+    }    
+}
+
+@media screen and (min-width: 1020px){
+    .wrapper .info .card3{
+        grid-column: auto;
+        position: relative;
+        left: 0;
+    }    
+}
