@@ -25,37 +25,13 @@ let modal = document.querySelector('.modal-wrapper')
 let table = document.querySelector('.little-table')
 
 onload = () => {
-    let numString = JSON.stringify(nums)
+    let numsParse = JSON.parse(localStorage.getItem('nums'))
 
-    if(localStorage.getItem('nums') == null || localStorage.getItem('nums') == undefined || localStorage.getItem('nums') == ''){
-        localStorage.setItem('nums', numString)
+    if(numsParse.total < 0){
+        document.querySelector('.card3').style.background = '#E92929'
     }else{
-        let numsParse = JSON.parse(localStorage.getItem('nums'))
-
-        if(numsParse.total < 0){
-            document.querySelector('.card3').style.background = '#E92929'
-        }else{
-            document.querySelector('.card3').style.background = '#49AA26'
-        }
-        let nums = {total: 0, exits: 0, prohibiteds: 0}
-
-        let numString = JSON.stringify(nums)
-        if(localStorage.getItem('nums') == null ){
-            localStorage.setItem('nums', numString) 
-        }else{
-            nums = JSON.parse(localStorage.getItem('nums'))
-        }
-        totalHTML.innerHTML = nums.total.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
-        exitsHTML.innerHTML = nums.exits.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
-        prohibitedsHTML.innerHTML = nums.prohibiteds.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+        document.querySelector('.card3').style.background = '#49AA26'
     }
-    let arrString = JSON.stringify(arr)
-    if(localStorage.getItem('arr') == null ){
-        localStorage.setItem('arr', arrString) 
-    }else{
-        localStorage.setItem('arr', arrString)
-    }
-
     let arrParse = JSON.parse(localStorage.getItem('arr'))
 
     for(let i = 0; i < arrParse.length; i++){
@@ -85,7 +61,7 @@ function save() {
         if(localStorage.getItem('arr') == null ){
             localStorage.setItem('arr', arrString) 
         }else{
-            arr = JSON.parse(localStorage.getItem('arr'))
+            localStorage.setItem('arr', arrString) 
         }
 
         toggleModal()

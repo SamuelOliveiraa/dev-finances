@@ -144,8 +144,8 @@ body{
 .wrapper .table .tr{
     background-color: var(--white);
     width: 100%;
-    padding: 2rem 3.2rem;
-    font-size: 1.6rem;
+    padding: 2.2rem 1.7rem;
+    font-size: 1.2rem;
     margin: 1rem 0;
 }
 .wrapper .table .first-tr, .date{
@@ -164,10 +164,12 @@ body{
     justify-content: flex-end;
 }
 .wrapper .little-table .tr .td .transation,
-.wrapper .little-table .tr .td .date,
 .wrapper .little-table .tr .td .value{
     width: 240px;
-    margin-right: 7rem;
+}
+
+.wrapper .little-table .tr .td .date{
+    margin: 0 0.4rem;
 }
 .wrapper .table .tr .td .exit{
     color: var(--red);
@@ -241,10 +243,23 @@ body{
     background-color: var(--red);
     color: white;
 }
+@media screen and (min-width: 400px){
+    .wrapper .little-table .tr .td .transation,
+    .wrapper .little-table .tr .td .date,
+    .wrapper .little-table .tr .td .value{
+        width: 240px;
+    }
+    .wrapper .little-table .tr .td .date{
+        margin: 0;
+    }
 @media screen and (min-width: 460px){
     .modal-wrapper .modal{
         width: 50rem;
     }
+    .wrapper .table .tr{
+        font-size: 1.6rem;
+    }
+}
 }
 @media screen and (min-width: 660px){
     .wrapper .info .card3{
@@ -253,7 +268,13 @@ body{
         left: -14rem;
     }    
 }
-
+@media  screen and (min-width: 800px) {
+    .wrapper .little-table .tr .td .transation,
+    .wrapper .little-table .tr .td .date,
+    .wrapper .little-table .tr .td .value {
+        margin-right: 7rem;
+    }
+}
 @media screen and (min-width: 1020px){
     .wrapper .info .card3{
         grid-column: auto;
