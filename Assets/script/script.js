@@ -1,9 +1,67 @@
-var arr = [], nums = []
+var arr = []
 
-let exits = 0, prohibiteds = 0
+let arrString = JSON.stringify(arr)
+if(localStorage.getItem('arr') == null ){
+    localStorage.setItem('arr', arrString) 
+}else{
+    arr = JSON.parse(localStorage.getItem('arr'))
+}
+
+let nums = {total: 0, exits: 0, prohibiteds: 0}
+
+let numString = JSON.stringify(nums)
+if(localStorage.getItem('nums') == null ){
+    localStorage.setItem('nums', numString) 
+}else{
+    nums = JSON.parse(localStorage.getItem('nums'))
+}
+
+totalHTML.innerHTML = nums.total.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+exitsHTML.innerHTML = nums.exits.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+prohibitedsHTML.innerHTML = nums.prohibiteds.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+let exits = nums.exits, prohibiteds = nums.prohibiteds
 
 let modal = document.querySelector('.modal-wrapper')
 let table = document.querySelector('.little-table')
+
+onload = () => {
+    let numString = JSON.stringify(nums)
+
+    if(localStorage.getItem('nums') == null || localStorage.getItem('nums') == undefined || localStorage.getItem('nums') == ''){
+        localStorage.setItem('nums', numString)
+    }else{
+        let numsParse = JSON.parse(localStorage.getItem('nums'))
+
+        if(numsParse.total < 0){
+            document.querySelector('.card3').style.background = '#E92929'
+        }else{
+            document.querySelector('.card3').style.background = '#49AA26'
+        }
+        let nums = {total: 0, exits: 0, prohibiteds: 0}
+
+        let numString = JSON.stringify(nums)
+        if(localStorage.getItem('nums') == null ){
+            localStorage.setItem('nums', numString) 
+        }else{
+            nums = JSON.parse(localStorage.getItem('nums'))
+        }
+        totalHTML.innerHTML = nums.total.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+        exitsHTML.innerHTML = nums.exits.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+        prohibitedsHTML.innerHTML = nums.prohibiteds.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+    }
+    let arrString = JSON.stringify(arr)
+    if(localStorage.getItem('arr') == null ){
+        localStorage.setItem('arr', arrString) 
+    }else{
+        localStorage.setItem('arr', arrString)
+    }
+
+    let arrParse = JSON.parse(localStorage.getItem('arr'))
+
+    for(let i = 0; i < arrParse.length; i++){
+        makeTransation(arrParse[i].description, arrParse[i].value, arrParse[i].date)
+    }
+}
 /* ACIONADO QUANDO O BOTAO SAVE FOR APERTADO */
 function save() {
     let description = document.querySelector('#description')
@@ -15,21 +73,21 @@ function save() {
         msgError(data, 2)
         msgError(value, 3)
     }else{
-        let ob = makeTransation(description.value, value.value, data)
+        let ob = makeTransation(description.value, Number(value.value), data)
 
         arr.push(ob)
 
-        calc(value.value, '')
+        calc(Number(value.value), '')
 
         description.value = '',value.value = '',date.value  = ''
 
         let arrString = JSON.stringify(arr)
-
-        if(localStorage.getItem('arr') == null){
-            localStorage.setItem('arr', arrString)
+        if(localStorage.getItem('arr') == null ){
+            localStorage.setItem('arr', arrString) 
         }else{
-            localStorage.setItem('arr', arrString)
+            arr = JSON.parse(localStorage.getItem('arr'))
         }
+
         toggleModal()
     }
 }
@@ -68,40 +126,13 @@ function msgError(elemento, base){
         elemento.style.border = '0'
     }  
 }
-/* ABRE E FECHA A MODAL */
-function toggleModal(){
-    if(modal.style.display == 'grid'){
-        modal.style.display = 'none'
-    }else{
-        modal.style.display = 'grid'
-    }
-}
-/* FAZ O CALCULO */
-function calc(value, state) {
-    if(value < 0 && state == 'saida'){
-        exits -= Number(value)
-    }else if(value > 0 && state == 'entrada'){
-        prohibiteds -= value
-    }else if(value < 0 && state == ''){
-        exits += value
-    }else if(value > 0 && state == ''){
-        prohibiteds += value
-    }
-
-    let total = prohibiteds - exits
-
-    exitsHTML.innerHTML = exits
-    prohibitedsHTML.innerHTML = prohibiteds
-    totalHTML.innerHTML = total
-
-    let numbers = {total: total, exits: exits, prohibiteds: prohibiteds}
-    nums.push(numbers)
-}
 /* CRIA O ELEMENTO */
 function makeTransation(transation, value, date) {
     var tr = document.createElement('div')
     tr.setAttribute("class", "tr")
-   
+    let color = ''
+    value < 0 ? color = 'exit' : color = 'prohibited'
+    
     tr.innerHTML = 
         `<div class="td">
             <span>
@@ -112,91 +143,83 @@ function makeTransation(transation, value, date) {
                 ${date}
             </span>
             
-            <span class="value prohibited">
-                R$ ${value}
+            <span class="value ${color}">
+                ${value.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}
             </span>
             
             <span class="transation">
                 ${transation}
             </span>
         </div>`
-        if(value < 0){
-            document.querySelector('.value').classList.add('exit')
-        }else{
-            document.querySelector('.value').classList.add('prohibited')
-        }
+        
     table.append(tr)
 
     return {description: transation, value: value, date: date}
+}
+/* FAZ O CALCULO */
+function calc(value, state) {
+    if(value < 0 && state == 'saida'){
+        exits -= value
+    }else if(value > 0 && state == 'entrada'){
+        prohibiteds -= value
+    }else if(value < 0 && state == ''){
+        exits += value
+    }else if(value > 0 && state == ''){
+        prohibiteds += value
+    }
+
+    let total = Number((prohibiteds + (exits)).toFixed(2))
+    console.log('total: ' + total)
+
+    if(total < 0){
+        document.querySelector('.card3').style.background = '#E92929'
+    }else{
+        document.querySelector('.card3').style.background = '#49AA26'
+    }
+
+    totalHTML.innerHTML = total.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+    exitsHTML.innerHTML = exits.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+    prohibitedsHTML.innerHTML = prohibiteds.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+
+    nums.total = total
+    nums.exits = exits
+    nums.prohibiteds = prohibiteds
+    
+    let numString = JSON.stringify(nums)
+
+    if(localStorage.getItem('nums') == null){
+        localStorage.setItem('nums', numString)
+    }else{
+        localStorage.setItem('nums', numString)
+    }
+}
+/* ABRE E FECHA A MODAL */
+function toggleModal(){
+    modal.style.display == 'grid' ? modal.style.display = 'none' : modal.style.display = 'grid'
 }
 /* REMOVE O ITEM DA LISTA */
 function removeTransation(e) {
     let dad = e.parentNode
     let grandpa = dad.parentNode
-
-    let arrParse = JSON.parse(localStorage.getItem('arr'))
+    
+    var replaceString = dad.children[2].innerText.replace(/[.]/g, '')
+    replaceString = replaceString.replace(/[,]/g, '.')
+    replaceString = parseFloat(replaceString.replace(/\s|[R$]/g, ""))
 
     /* REMOVE O ITEM CLICADO DO HTML */
-    for(let i = 0; i < arrParse.length; i++){
+    for(let i = 0; i < arr.length; i++){
         if(table.children[i] == grandpa){
+            replaceString < 0 ? calc(replaceString, 'saida') : calc(replaceString, 'entrada')
             grandpa.style.display = 'none'
             grandpa.parentNode.removeChild(grandpa)
         }
     }
-    
-    if(dad.children[2].innerText.replace(/.+\$/g, "") < 0){
-        calc(dad.children[2].innerText.replace(/.+\$/g, ""), 'saida')
-    }else{
-        calc(dad.children[2].innerText.replace(/.+\$/g, ""), 'entrada')
-    }
-
     /* REMOVE O ITEM CLICADO DO LOCAL STORAGE E ELMINA OS ESPAÇOS DA STRING COM TRIM() */
-    for(let i = 0; i < arrParse.length; i++){
-        if(arrParse[i].description == dad.children[3].innerText.trim() && arrParse[i].value == dad.children[2].innerText.replace(/.+\$/g, "").trim() && arrParse[i].date == dad.children[1].innerText.trim()){
-            arrParse.splice(i,1)
-            
-            let arrString = JSON.stringify(arrParse)
-            
+    for(let i = 0; i < arr.length; i++){
+        if(arr[i].description == dad.children[3].innerText.trim() && arr[i].value == replaceString && arr[i].date == dad.children[1].innerText.trim()){
+            arr.splice(i,1)
+            let arrString = JSON.stringify(arr)
             localStorage.setItem('arr', arrString)
         }
     }
-}
-
-onload = () => {
-    let numString = JSON.stringify(nums)
-    let numeros = JSON.stringify({total: 0, exits: 0, prohibiteds: 0})
-
-    if(localStorage.getItem('nums') == null){
-        nums.push(numeros)
-        localStorage.setItem('nums', numString)
-
-    }else{
-        localStorage.setItem('nums', numString)
-    }
-    let arrParse = JSON.parse(localStorage.getItem('arr'))
-
-    for(let i = 0; i < arrParse.length; i++){
-        makeTransation(arrParse[i].description, arrParse[i].value, arrParse[i].date)
-    }
-    let numsParse = JSON.parse(localStorage.getItem('nums'))
-
-    totalHTML.innerHTML = numsParse.total == undefined ? numsParse.total = 0 : numsParse.total = numsParse.total 
-    exitsHTML.innerHTML = numsParse.exit == undefined ? numsParse.exit = 0 : numsParse.exit = numsParse.exit 
-    prohibitedsHTML.innerHTML = numsParse.prohibiteds == undefined ? numsParse.prohibiteds = 0 : numsParse.prohibiteds = numsParse.prohibiteds 
-}
-function formatarMoeda() {
-    var elemento = document.querySelector('#valor')
-    var valor = elemento.value;
-
-    valor = valor + '';
-    valor = parseInt(valor.replace(/[\D]+/g, ''));
-    valor = valor + '';
-    valor = valor.replace(/([0-9]{2})$/g, ",$1");
-
-    if (valor.length > 6) {
-        valor = valor.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
-    }
-
-    elemento.value = valor;
-    if(valor == 'NaN') elemento.value = '';
 }

@@ -38,7 +38,7 @@
                         </p>
 
                         <div class="res" >
-                            R$ <span id="prohibitedsHTML"></span>
+                            <span id="prohibitedsHTML"></span>
                         </div>
                     </div>
                     
@@ -50,7 +50,7 @@
                         </p>
 
                         <div class="res">
-                            R$ <span id="exitsHTML"></span>
+                            <span id="exitsHTML"></span>
                         </div>
                     </div>
                     
@@ -62,7 +62,7 @@
                         </p>
 
                         <div class="res">
-                            R$ <span id="totalHTML"></span>
+                            <span id="totalHTML"></span>
                         </div>
                     </div>
                 </div>
@@ -114,7 +114,7 @@
                     </p>
 
                     <label for="valor" class="sr-only">Valor da Transação</label>
-                    <input type="text" name="valor" id="valor" placeholder="0,00" oninput="msgError(this, 3)"onkeyup="formatarMoeda()">
+                    <input type="number" name="valor" id="valor" placeholder="0,00" oninput="msgError(this, 3)">
                     
                     <p id="valueError">
                         Use o sinal - (negativo) para despesas e , (vírgula) para casas decimais
