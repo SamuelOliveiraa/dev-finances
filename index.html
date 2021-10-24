@@ -107,21 +107,21 @@
                 </h2>
                 <form action="#">
                     <label for="description" class="sr-only">Descrição da Transação</label>
-                    <input type="text" name="description" id="description" placeholder="Descrição" oninput="msgError(this, 1)">
+                    <input type="text" name="description" id="description" placeholder="Descrição" required oninput="msgError(this, 1)">
                     
                     <p id="descriptionError">
                         Adicione uma descrição para a transação
                     </p>
 
                     <label for="valor" class="sr-only">Valor da Transação</label>
-                    <input type="number" name="valor" id="valor" placeholder="0,00" oninput="msgError(this, 3)">
+                    <input type="number" name="valor" id="valor" placeholder="0,00" required oninput="msgError(this, 3)">
                     
                     <p id="valueError">
                         Use o sinal - (negativo) para despesas e , (vírgula) para casas decimais
                     </p>
                     
                     <label for="date" class="sr-only">data da Transação</label>
-                    <input type="date" name="date" id="date" placeholder="dd/mm/yyyy" oninput="msgError(this, 2)">
+                    <input type="date" name="data" id="date" oninput="msgError(this, 2)"/>
                     
                     <p id="dateError">
                         Adicione uma data para a transação

@@ -41,15 +41,16 @@ onload = () => {
 /* ACIONADO QUANDO O BOTAO SAVE FOR APERTADO */
 function save() {
     let description = document.querySelector('#description')
+    let data = document.querySelector('#date')
     let value = document.querySelector('#valor')
-    let data = ((new Date(document.querySelector('#date').value).getDate() + 1 )) + "/" + ((new Date(document.querySelector('#date').value).getMonth() + 1)) + "/" + new Date(document.querySelector('#date').value).getFullYear()
 
-    if(description.value == '' || value.value == '' || data == '' || description.value == 0 || value.value == 0 || data == 0){
+    if(description.value == '' || value.value == '' || data.value == '' || description.value == null || value.value == 0 || data.value.length < 10){
         msgError(description, 1)
         msgError(data, 2)
         msgError(value, 3)
     }else{
-        let ob = makeTransation(description.value, Number(value.value), data)
+        let dateString = ((new Date(data.value).getDate() + 1 )) + "/" + ((new Date(data.value).getMonth() + 1)) + "/" + new Date(data.value).getFullYear() 
+        let ob = makeTransation(description.value, Number(value.value), dateString)
 
         arr.push(ob)
 
@@ -70,37 +71,29 @@ function save() {
 /* MOSTRA A MENSAGEM DE ERRO DE QUALQUER INPUT DO MODAL */
 function msgError(elemento, base){
     let msgError = ""
-
     if(base == 1){
         msgError = descriptionError
+        error(elemento, msgError, 'none', '#E92929', 'Adicione uma descrição para a transação', '')
     }else if(base == 2){
-        msgError = dateError
-        if(elemento == "" || elemento == null){
-            msgError.style.display = 'block'
-            elemento.style.border = '1px solid #E92929'
-        }else if(base != 3){
-            msgError.style.display = 'none'
-            elemento.style.border = '0'
-        }  
+        msgError = dateError 
+        error(elemento, msgError, 'none', '#E92929', 'Adicione uma data para a transação', '')
     }else if(base == 3){
         msgError = valueError
-        if(elemento.value == "" || elemento == null){
-            msgError.style.color = '#E92929'
-            msgError.innerHTML = 'Adicione um valor para a transação'
-            elemento.style.border = '1px solid #E92929'
-        }else{
-            msgError.style.color = '#000'
-            msgError.innerHTML = 'Use o sinal - (negativo) para despesas e , (vírgula) para casas decimais'
-            elemento.style.border = '0'
-        }    
+        error(elemento, msgError, 'block', '#000', 'Adicione um valor para a transação', 'Use o sinal - (negativo) para despesas e , (vírgula) para casas decimais')    
     }
-    if(elemento.value == "" || elemento == null){
+}
+function error(elemento, msgError, noDisplay,styleColor,htmlError, html) {
+    if(elemento.value == "" || elemento.value == null ){
         msgError.style.display = 'block'
+        msgError.style.color = '#E92929'
+        msgError.innerHTML =  htmlError 
         elemento.style.border = '1px solid #E92929'
-    }else if(base != 3){
-        msgError.style.display = 'none'
+    }else{
+        msgError.style.display = noDisplay
+        msgError.style.color = styleColor
+        msgError.innerHTML = html
         elemento.style.border = '0'
-    }  
+    } 
 }
 /* CRIA O ELEMENTO */
 function makeTransation(transation, value, date) {
@@ -145,13 +138,11 @@ function calc(value, state) {
     }
 
     let total = Number((prohibiteds + (exits)).toFixed(2))
-    console.log('total: ' + total)
+    total === -0 ? parseInt(total) : false
+    
+    console.log(total)
 
-    if(total < 0){
-        document.querySelector('.card3').style.background = '#E92929'
-    }else{
-        document.querySelector('.card3').style.background = '#49AA26'
-    }
+    total < 0 ? document.querySelector('.card3').style.background = '#E92929': document.querySelector('.card3').style.background = '#49AA26'
 
     totalHTML.innerHTML = total.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
     exitsHTML.innerHTML = exits.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
