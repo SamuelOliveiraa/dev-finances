@@ -138,7 +138,7 @@ function calc(value, state) {
     }
 
     let total = Number((prohibiteds + (exits)).toFixed(2))
-    total ==4 -0 ? parseInt(total) : false
+    total == -0 ? parseInt(total) : false
     
     console.log(total)
 
